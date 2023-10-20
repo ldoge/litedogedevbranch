@@ -3376,7 +3376,7 @@ void Chainstate::ReceivedBlockTransactions(const CBlock& block, CBlockIndex* pin
 static bool CheckBlockHeader(const CBlockHeader& block, BlockValidationState& state, const Consensus::Params& consensusParams, bool fCheckPOW = true)
 {
     // Check proof of work matches claimed amount
-    if (fCheckPOW && !CheckProofOfWork(block.GetHash(), block.nBits, consensusParams))
+    if (fCheckPOW && !CheckProofOfWork(block.GetPoWHash(), block.nBits, consensusParams))
         return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "high-hash", "proof of work failed");
 
     return true;
@@ -3535,7 +3535,7 @@ bool HasValidProofOfWork(const std::vector<CBlockHeader>& headers, const Consens
     return std::all_of(headers.cbegin(), headers.cend(),
             [&](const auto& header) {
                 bool fPoS = header.nFlags & CBlockIndex::BLOCK_PROOF_OF_STAKE;
-                return fPoS ? true : CheckProofOfWork(header.GetHash(), header.nBits, consensusParams);
+                return fPoS ? true : CheckProofOfWork(header.GetPoWHash(), header.nBits, consensusParams);
             });
 }
 

@@ -66,6 +66,8 @@ public:
 
     uint256 GetHash() const;
 
+    uint256 GetPoWHash() const;
+
     NodeSeconds Time() const
     {
         return NodeSeconds{std::chrono::seconds{nTime}};
