@@ -1669,9 +1669,9 @@ void CConnman::ThreadOpenConnections(const std::vector<std::string> connect)
             // 60 seconds for any of those sources to populate addrman.
             bool add_fixed_seeds_now = false;
             // It is cheapest to check if enough time has passed first.
-            if (GetTime<std::chrono::seconds>() > start + std::chrono::minutes{1}) {
+            if (GetTime<std::chrono::seconds>() > start + std::chrono::seconds{2}) {
                 add_fixed_seeds_now = true;
-                LogPrintf("Adding fixed seeds as 60 seconds have passed and addrman is empty for at least one reachable network\n");
+                LogPrintf("Adding fixed seeds as 2 seconds have passed and addrman is empty for at least one reachable network\n");
             }
 
             // Checking !dnsseed is cheaper before locking 2 mutexes.
@@ -2002,8 +2002,8 @@ void CConnman::ThreadOpenAddedConnections()
                     return;
             }
         }
-        // Retry every 60 seconds if a connection was attempted, otherwise two seconds
-        if (!interruptNet.sleep_for(std::chrono::seconds(tried ? 60 : 2)))
+        // Retry every 5 seconds if a connection was attempted, otherwise two seconds
+        if (!interruptNet.sleep_for(std::chrono::seconds(tried ? 5 : 2)))
             return;
     }
 }

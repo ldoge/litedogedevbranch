@@ -3200,7 +3200,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
     if (peer == nullptr) return;
 
     // set deserialization mode to read PoS flag in headers
-    vRecv.SetType(vRecv.GetType() | SER_POSMARKER);
+    // vRecv.SetType(vRecv.GetType() | SER_POSMARKER);
 
     if (msg_type == NetMsgType::VERSION) {
         auto it = mapPoSTemperature.find(pfrom.addr);

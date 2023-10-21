@@ -103,8 +103,6 @@ CBlockIndex* BlockManager::AddToBlockIndex(const CBlockHeader& block, CBlockInde
         pindexNew->BuildSkip();
     }
     pindexNew->nTimeMax = (pindexNew->pprev ? std::max(pindexNew->pprev->nTimeMax, pindexNew->nTime) : pindexNew->nTime);
-    if (block.nFlags & CBlockIndex::BLOCK_PROOF_OF_STAKE)
-        pindexNew->SetProofOfStake();
     pindexNew->nChainTrust = (pindexNew->pprev ? pindexNew->pprev->nChainTrust : 0) + GetBlockTrust(*pindexNew);
     pindexNew->RaiseValidity(BLOCK_VALID_TREE);
     if (best_header == nullptr || best_header->nChainTrust < pindexNew->nChainTrust) {
@@ -170,13 +168,6 @@ bool BlockManager::LoadBlockIndex(const Consensus::Params& consensus_params)
         }
         if (pindex->pprev) {
             pindex->BuildSkip();
-        }
-        // peercoin: calculate stake modifier checksum
-        pindex->nStakeModifierChecksum = GetStakeModifierChecksum(pindex);
-        //if (chainman.ActiveChain().Contains(pindex))
-        if (pindex->nStatus & BLOCK_HAVE_DATA) {
-            if (!CheckStakeModifierCheckpoints(pindex->nHeight, pindex->nStakeModifierChecksum))
-                return error("LoadBlockIndex() : Failed stake modifier checkpoint height=%d, modifier=0x%016llx", pindex->nHeight, pindex->nStakeModifier);
         }
     }
 

@@ -14,52 +14,47 @@
 #include <chainparams.h>
 #include <kernel.h>
 
+inline bool IsProtocolV2(int nHeight) { return nHeight > 2; }
+inline bool IsProtocolV1RetargetingFixed(int nHeight) { return nHeight > 1; }
+unsigned int GetTargetSpacing(int nHeight) { return IsProtocolV2(nHeight) ? 64 : 60; }
+
 unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake, const Consensus::Params& params)
 {
+    const uint256 bnTargetLimit = uint256S("0x00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+
     if (pindexLast == nullptr)
-        return UintToArith256(params.powLimit).GetCompact(); // genesis block
+        return UintToArith256(bnTargetLimit).GetCompact(); // genesis block
 
     const CBlockIndex* pindexPrev = GetLastBlockIndex(pindexLast, fProofOfStake);
-    if (pindexPrev->pprev == nullptr)
-        return UintToArith256(params.bnInitialHashTarget).GetCompact(); // first block
-    const CBlockIndex* pindexPrevPrev = GetLastBlockIndex(pindexPrev->pprev, fProofOfStake);
-    if (pindexPrevPrev->pprev == nullptr)
-        return UintToArith256(params.bnInitialHashTarget).GetCompact(); // second block
+    if (pindexPrev->pprev == NULL)
+        return UintToArith256(bnTargetLimit).GetCompact();
 
+    const CBlockIndex* pindexPrevPrev = GetLastBlockIndex(pindexPrev->pprev, fProofOfStake);
+    if (pindexPrevPrev->pprev == NULL)
+        return UintToArith256(bnTargetLimit).GetCompact();
+
+    int64_t nTargetSpacing = GetTargetSpacing(pindexLast->nHeight);
     int64_t nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
 
-    // rfc20
-    int64_t nHypotheticalSpacing = pindexLast->GetBlockTime() - pindexPrev->GetBlockTime();
-    if (!fProofOfStake && IsProtocolV12(pindexPrev) && (nHypotheticalSpacing > nActualSpacing))
-        nActualSpacing = nHypotheticalSpacing;
+    if (IsProtocolV1RetargetingFixed(pindexLast->nHeight)) {
+        if (nActualSpacing < 0)
+            nActualSpacing = nTargetSpacing;
+    }
 
     // peercoin: target change every block
     // peercoin: retarget with exponential moving toward target spacing
     CBigNum bnNew;
     bnNew.SetCompact(pindexPrev->nBits);
-    if (Params().NetworkIDString() != CBaseChainParams::REGTEST) {
-        int64_t nTargetSpacing;
-
-        if (fProofOfStake) {
-            nTargetSpacing = params.nStakeTargetSpacing;
-        } else {
-            if (IsProtocolV09(pindexLast->nTime)) {
-                nTargetSpacing = params.nStakeTargetSpacing * 6;
-            } else {
-                nTargetSpacing = std::min(params.nTargetSpacingWorkMax, params.nStakeTargetSpacing * (1 + pindexLast->nHeight - pindexPrev->nHeight));
-            }
-        }
-
-        int64_t nInterval = params.nTargetTimespan / nTargetSpacing;
-        bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
-        bnNew /= ((nInterval + 1) * nTargetSpacing);
-        }
+    int64_t nInterval = params.nTargetTimespan / nTargetSpacing;
+    bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
+    bnNew /= ((nInterval + 1) * nTargetSpacing);
 
     if (bnNew > CBigNum(params.powLimit))
         bnNew = CBigNum(params.powLimit);
 
     return bnNew.GetCompact();
 }
+
 /*
 // Check that on difficulty adjustments, the new difficulty does not increase
 // or decrease beyond the permitted limits.

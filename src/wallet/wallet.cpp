@@ -3760,14 +3760,9 @@ bool CWallet::CreateCoinStake(ChainstateManager& chainman, const CWallet* pwalle
             vwtxPrev.push_back(tx);
         }
     }
-    // Calculate coin age reward
-    {
-        uint64_t nCoinAge;
-        CCoinsViewCache view(&chainman.ActiveChainstate().CoinsTip());
-        if (!GetCoinAge((const CTransaction)txNew, view, nCoinAge, txNew.nTime, true))
-            return error("CreateCoinStake : failed to calculate coin age");
 
-        CAmount nReward = GetProofOfStakeReward(nCoinAge, txNew.nTime, chainman.ActiveChain().Tip()->nMoneySupply);
+    {
+        CAmount nReward = GetProofOfStakeReward(chainman.ActiveChain().Tip()->pprev->nHeight, 0);
         // Refuse to create mint that has zero or negative reward
         if(nReward <= 0) {
             return false;

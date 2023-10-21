@@ -1390,68 +1390,84 @@ PackageMempoolAcceptResult ProcessNewPackage(Chainstate& active_chainstate, CTxM
     return result;
 }
 
-int64_t GetProofOfWorkReward(unsigned int nBits, uint32_t nTime)
+CAmount GetProofOfWorkReward(int nHeight, int64_t nFees)
 {
-    CBigNum bnSubsidyLimit = MAX_MINT_PROOF_OF_WORK;
-    CBigNum bnTarget;
-    bnTarget.SetCompact(nBits);
-    CBigNum bnTargetLimit(Params().GetConsensus().powLimit);
-    bnTargetLimit.SetCompact(bnTargetLimit.GetCompact());
-
-    // peercoin: subsidy is cut in half every 16x multiply of difficulty
-    // A reasonably continuous curve is used to avoid shock to market
-    // (nSubsidyLimit / nSubsidy) ** 4 == bnProofOfWorkLimit / bnTarget
-    CBigNum bnLowerBound = CENT;
-    CBigNum bnUpperBound = bnSubsidyLimit;
-    while (bnLowerBound + CENT <= bnUpperBound)
-    {
-        CBigNum bnMidValue = (bnLowerBound + bnUpperBound) / 2;
-        if (gArgs.GetBoolArg("-printcreation", false))
-            LogPrintf("%s: lower=%lld upper=%lld mid=%lld\n", __func__, bnLowerBound.getuint64(), bnUpperBound.getuint64(), bnMidValue.getuint64());
-        if (bnMidValue * bnMidValue * bnMidValue * bnMidValue * bnTargetLimit > bnSubsidyLimit * bnSubsidyLimit * bnSubsidyLimit * bnSubsidyLimit * bnTarget)
-            bnUpperBound = bnMidValue;
-        else
-            bnLowerBound = bnMidValue;
+    int64_t nSubsidy = 0;
+    if (nHeight < 30) {
+        nSubsidy = 1000 * COIN;
+    } else if (nHeight < 1000) {
+        nSubsidy = 1000000 * COIN;
+    } else if (nHeight < 2000) {
+        nSubsidy = 500000 * COIN;
+    } else if (nHeight < 3000) {
+        nSubsidy = 250000 * COIN;
+    } else if (nHeight < 4000) {
+        nSubsidy = 125000 * COIN;
+    } else if (nHeight < 5000) {
+        nSubsidy = 62500 * COIN;
+    } else if (nHeight < 6000) {
+        nSubsidy = 31250 * COIN;
+    } else if (nHeight < 7000) {
+        nSubsidy = 15625 * COIN;
+    } else if (nHeight <= 8000) {
+        nSubsidy = 10000 * COIN;
     }
 
-    int64_t nSubsidy = bnUpperBound.getuint64();
-    nSubsidy = (nSubsidy / CENT) * CENT;
-
-    nSubsidy = std::min(nSubsidy, IsProtocolV10(nTime) ? MAX_MINT_PROOF_OF_WORK_V10 : MAX_MINT_PROOF_OF_WORK);
-
-    if (gArgs.GetBoolArg("-printcreation", false))
-        LogPrintf("%s: create=%s nBits=0x%08x nSubsidy=%lld\n", __func__, FormatMoney(nSubsidy), nBits, nSubsidy);
-
-    return nSubsidy;
+    return nSubsidy + nFees;
 }
 
-// peercoin: miner's coin stake is rewarded based on coin age spent (coin-days)
-int64_t GetProofOfStakeReward(int64_t nCoinAge, uint32_t nTime, uint64_t nMoneySupply)
+CAmount GetProofOfStakeReward(int nHeight, CAmount nFees)
 {
-    static int64_t nRewardCoinYear = CENT;  // creation amount per coin-year
-    int64_t nSubsidy = nCoinAge * 33 / (365 * 33 + 8) * nRewardCoinYear;
+    static const int halvingPeriod = 2000000;
 
-    if (IsProtocolV09(nTime)) {
-        // rfc18
-        // YearlyBlocks = ((365 * 33 + 8) / 33) * 1440 / 10
-        // some efforts not to lose precision
-        CBigNum bnInflationAdjustment = nMoneySupply;
-        bnInflationAdjustment *= 25 * 33;
-        bnInflationAdjustment /= 10000 * 144;
-        bnInflationAdjustment /= (365 * 33 + 8);
+    int64_t nSubsidy = 1000 * COIN;
 
-        uint64_t nInflationAdjustment = bnInflationAdjustment.getuint64();
-        uint64_t nSubsidyNew = (nSubsidy * 3) + nInflationAdjustment;
+    if (nHeight < 10000) {
+        nSubsidy = 100000 * COIN;
+    } else if (nHeight < 20000) {
+        nSubsidy = 50000 * COIN;
+    } else if (nHeight < 30000) {
+        nSubsidy = 25000 * COIN;
+    } else if (nHeight < 40000) {
+        nSubsidy = 12500 * COIN;
+    } else if (nHeight < 51000) {
+        nSubsidy = 10000 * COIN;
+        int halvings = nHeight / halvingPeriod;
+        nSubsidy = (halvings >= 64) ? 0 : (nSubsidy >> halvings);
+        nSubsidy -= nSubsidy * (nHeight % halvingPeriod) / (2 * halvingPeriod);
+    } else if (nHeight < 144999) {
+        nSubsidy = 30000 * COIN;
+    } else if (nHeight < 189999) {
+        nSubsidy = 28000 * COIN;
+    } else if (nHeight < 234999) {
+        nSubsidy = 26000 * COIN;
+    } else if (nHeight < 279999) {
+        nSubsidy = 24000 * COIN;
+    } else if (nHeight < 324999) {
+        nSubsidy = 22000 * COIN;
+    } else if (nHeight < 369999) {
+        nSubsidy = 20000 * COIN;
+    } else if (nHeight < 414999) {
+        nSubsidy = 18000 * COIN;
+    } else if (nHeight < 459999) {
+        nSubsidy = 16000 * COIN;
+    } else if (nHeight < 504999) {
+        nSubsidy = 14000 * COIN;
+    } else if (nHeight < 549999) {
+        nSubsidy = 12000 * COIN;
+    } else if (nHeight < 594999) {
+        nSubsidy = 10000 * COIN;
+    } else if (nHeight < 639999) {
+        nSubsidy = 4000 * COIN;
+    } else if (nHeight < 684999) {
+        nSubsidy = 2000 * COIN;
+    } else if (nHeight < 729999) {
+        nSubsidy = 1000 * COIN;
+    } else {
+        nSubsidy = 500 * COIN;
+    }
 
-        if (gArgs.GetBoolArg("-printcreation", false))
-            LogPrintf("%s: money supply %ld, inflation adjustment %f, old subsidy %ld, new subsidy %ld\n", __func__, nMoneySupply, nInflationAdjustment/1000000.0, nSubsidy, nSubsidyNew);
-
-        nSubsidy = nSubsidyNew;
-        }
-
-    if (gArgs.GetBoolArg("-printcreation", false))
-        LogPrintf("%s: create=%s nCoinAge=%lld\n", __func__, FormatMoney(nSubsidy), nCoinAge);
-    return nSubsidy;
+    return nSubsidy + nFees;
 }
 
 CoinsViews::CoinsViews(DBParams db_params, CoinsViewOptions options)
@@ -1947,7 +1963,7 @@ bool PeercoinContextualBlockChecks(const CBlock& block, BlockValidationState& st
 {
     uint256 hashProofOfStake = uint256();
     // peercoin: verify hash target and signature of coinstake tx
-    if (block.IsProofOfStake() && !CheckProofOfStake(state, pindex->pprev, block.vtx[1], block.nBits, hashProofOfStake, block.vtx[1]->nTime ? block.vtx[1]->nTime : block.nTime, chainstate)) {
+    if (block.IsProofOfStake() && !CheckProofOfStake(state, pindex->pprev, block.vtx[1], block.nBits, hashProofOfStake, block.vtx[1]->nTime, chainstate)) {
         LogPrintf("WARNING: %s: check proof-of-stake failed for block %s\n", __func__, block.GetHash().ToString());
         return false; // do not error here as we expect this during initial block download
     }
@@ -1963,6 +1979,8 @@ bool PeercoinContextualBlockChecks(const CBlock& block, BlockValidationState& st
             LogPrintf("WARNING: %s: duplicate proof-of-stake in block %s\n", __func__, block.GetHash().ToString());
             return error("ConnectBlock() : Duplicate coinstake found");
         }
+    } else {
+        hashProofOfStake = block.GetPoWHash();
     }
 
     // peercoin: compute stake entropy bit for stake modifier
@@ -1974,27 +1992,11 @@ bool PeercoinContextualBlockChecks(const CBlock& block, BlockValidationState& st
     if (!ComputeNextStakeModifier(pindex, nStakeModifier, fGeneratedStakeModifier, chainstate))
         return error("ConnectBlock() : ComputeNextStakeModifier() failed");
 
-    // compute nStakeModifierChecksum begin
-    unsigned int nFlagsBackup      = pindex->nFlags;
-    uint64_t nStakeModifierBackup  = pindex->nStakeModifier;
-    uint256 hashProofOfStakeBackup = pindex->hashProofOfStake;
-
     // set necessary pindex fields
     if (!pindex->SetStakeEntropyBit(nEntropyBit))
         return error("ConnectBlock() : SetStakeEntropyBit() failed");
     pindex->SetStakeModifier(nStakeModifier, fGeneratedStakeModifier);
     pindex->hashProofOfStake = hashProofOfStake;
-
-    unsigned int nStakeModifierChecksum = GetStakeModifierChecksum(pindex);
-
-    // undo pindex fields
-    pindex->nFlags           = nFlagsBackup;
-    pindex->nStakeModifier   = nStakeModifierBackup;
-    pindex->hashProofOfStake = hashProofOfStakeBackup;
-    // compute nStakeModifierChecksum end
-
-    if (!CheckStakeModifierCheckpoints(pindex->nHeight, nStakeModifierChecksum))
-        return error("ConnectBlock() : Rejected by stake modifier checkpoint height=%d, modifier=0x%016llx", pindex->nHeight, nStakeModifier);
 
     if (fJustCheck)
         return true;
@@ -2007,10 +2009,7 @@ bool PeercoinContextualBlockChecks(const CBlock& block, BlockValidationState& st
         pindex->hashProofOfStake = hashProofOfStake;
         setStakeSeen.insert(std::make_pair(pindex->prevoutStake, pindex->nTime));
     }
-    if (!pindex->SetStakeEntropyBit(nEntropyBit))
-        return error("ConnectBlock() : SetStakeEntropyBit() failed");
-    pindex->SetStakeModifier(nStakeModifier, fGeneratedStakeModifier);
-    pindex->nStakeModifierChecksum = nStakeModifierChecksum;
+
     chainstate.m_blockman.m_dirty_blockindex.insert(pindex); // queue a write to disk
 
     return true;
@@ -2226,6 +2225,7 @@ bool Chainstate::ConnectBlock(const CBlock& block, BlockValidationState& state, 
     CAmount nFees = 0;
     int64_t nValueIn = 0;
     int64_t nValueOut = 0;
+    int64_t nStakeReward = 0;
     int nInputs = 0;
     int64_t nSigOpsCost = 0;
     blockundo.vtxundo.reserve(block.vtx.size() - 1);
@@ -2252,6 +2252,8 @@ bool Chainstate::ConnectBlock(const CBlock& block, BlockValidationState& state, 
             nValueOut += tx.GetValueOut();
             if (!tx.IsCoinStake())
                 nFees += txfee;
+            if (tx.IsCoinStake())
+                nStakeReward = nValueOut - nValueIn;
             if (!MoneyRange(nFees)) {
                 LogPrintf("ERROR: %s: accumulated fee in the block out of range.\n", __func__);
                 return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "bad-txns-accumulated-fee-outofrange");
@@ -2310,7 +2312,33 @@ bool Chainstate::ConnectBlock(const CBlock& block, BlockValidationState& state, 
              Ticks<SecondsDouble>(time_connect),
              Ticks<MillisecondsDouble>(time_connect) / num_blocks_total);
 
-    // peercoin: coinbase reward check relocated to CheckBlock()
+    // Check reward earnt on mined block
+    CAmount nCoinbaseCost = 0;
+    if (block.IsProofOfWork())
+        nCoinbaseCost = (GetMinFee(*block.vtx[0], block.nTime) < PERKB_TX_FEE)? 0 : (GetMinFee(*block.vtx[0], block.nTime) - PERKB_TX_FEE);
+
+    if (block.vtx[0]->GetValueOut() > (block.IsProofOfWork()? GetProofOfWorkReward(pindex->nHeight, nFees) : 0))
+        return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "bad-cb-amount",
+                strprintf("CheckBlock() : coinbase reward exceeded %s > %s",
+                   FormatMoney(block.vtx[0]->GetValueOut()),
+                   FormatMoney(block.IsProofOfWork()? GetProofOfWorkReward(pindex->nHeight, nFees) : 0)));
+
+    // Check reward earnt on coinstake
+    if (block.IsProofOfStake())
+    {
+        // peercoin: coin stake tx earns reward instead of paying fee
+        uint64_t nCoinAge;
+        if (!GetCoinAge(*block.vtx[1], view, nCoinAge))
+            return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "unable to get coin age for coinstake");
+
+        CAmount nCalculatedStakeReward = GetProofOfStakeReward(pindex->pprev->nHeight, nFees);
+
+        // LogPrintf("stakeRewardFound %llu stakeRewardCalculated %llu\n", nStakeReward / COIN, nCalculatedStakeReward / COIN);
+
+        if (nStakeReward > nCalculatedStakeReward) {
+            return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "bad-txns-coinstake-too-large");
+        }
+    }
 
     if (!control.Wait()) {
         LogPrintf("ERROR: %s: CheckQueue failed\n", __func__);
@@ -3375,6 +3403,8 @@ void Chainstate::ReceivedBlockTransactions(const CBlock& block, CBlockIndex* pin
 
 static bool CheckBlockHeader(const CBlockHeader& block, BlockValidationState& state, const Consensus::Params& consensusParams, bool fCheckPOW = true)
 {
+    if (block.nNonce == 0) return true;
+
     // Check proof of work matches claimed amount
     if (fCheckPOW && !CheckProofOfWork(block.GetPoWHash(), block.nBits, consensusParams))
         return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "high-hash", "proof of work failed");
@@ -3389,9 +3419,11 @@ bool CheckBlock(const CBlock& block, BlockValidationState& state, const Consensu
     if (block.fChecked)
         return true;
 
+    const bool fProofOfStake = block.nNonce == 0;
+
     // Check that the header is valid (particularly PoW).  This is mostly
     // redundant with the call in AcceptBlockHeader.
-    if (!CheckBlockHeader(block, state, consensusParams, fCheckPOW && !block.IsProofOfStake()))
+    if (!CheckBlockHeader(block, state, consensusParams, fCheckPOW && !fProofOfStake))
         return false;
 
     // Signet only: check block solution
@@ -3447,15 +3479,6 @@ bool CheckBlock(const CBlock& block, BlockValidationState& state, const Consensu
     if (block.IsProofOfStake() && !CheckCoinStakeTimestamp(block.GetBlockTime(), block.vtx[1]->nTime ? (int64_t)block.vtx[1]->nTime : block.GetBlockTime()))
         return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "bad-cs-time", "coinstake timestamp violation");
 
-    // Check coinbase reward
-    CAmount nCoinbaseCost = 0;
-    if (block.IsProofOfWork())
-        nCoinbaseCost = (GetMinFee(*block.vtx[0], block.nTime) < PERKB_TX_FEE)? 0 : (GetMinFee(*block.vtx[0], block.nTime) - PERKB_TX_FEE);
-    if (block.vtx[0]->GetValueOut() > (block.IsProofOfWork()? (GetProofOfWorkReward(block.nBits, block.GetBlockTime()) - nCoinbaseCost) : 0))
-        return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "bad-cb-amount",
-                strprintf("CheckBlock() : coinbase reward exceeded %s > %s",
-                   FormatMoney(block.vtx[0]->GetValueOut()),
-                   FormatMoney(block.IsProofOfWork()? GetProofOfWorkReward(block.nBits, block.GetBlockTime()) : 0)));
     // Check transactions
     // Must check for duplicate inputs (see CVE-2018-17144)
     for (const auto& tx : block.vtx) {
@@ -3485,7 +3508,7 @@ bool CheckBlock(const CBlock& block, BlockValidationState& state, const Consensu
     // peercoin: check block signature
     // Only check block signature if check merkle root, c.f. commit 3cd01fdf
     // rfc6: validate signatures of proof of stake blocks only after 0.8 fork
-    if (fCheckMerkleRoot && fCheckSignature && (block.IsProofOfStake() || !IsBTC16BIPsEnabled(block.GetBlockTime())) && !CheckBlockSignature(block))
+    if (fCheckMerkleRoot && fCheckSignature && (block.IsProofOfStake() && !CheckBlockSignature(block)))
         return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "bad-blk-sign", strprintf("%s : bad block signature", __func__));
 
     return true;
@@ -3534,7 +3557,7 @@ bool HasValidProofOfWork(const std::vector<CBlockHeader>& headers, const Consens
 {
     return std::all_of(headers.cbegin(), headers.cend(),
             [&](const auto& header) {
-                bool fPoS = header.nFlags & CBlockIndex::BLOCK_PROOF_OF_STAKE;
+                bool fPoS = header.nNonce == 0;
                 return fPoS ? true : CheckProofOfWork(header.GetPoWHash(), header.nBits, consensusParams);
             });
 }
@@ -3565,8 +3588,9 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, BlockValidatio
     const int nHeight = pindexPrev->nHeight + 1;
 
     // Check proof of work or proof-of-stake
+    bool fProofOfStake = block.nNonce == 0;
     const Consensus::Params& consensusParams = chainman.GetConsensus();
-    if (block.nBits != GetNextTargetRequired(pindexPrev, block.nFlags & CBlockIndex::BLOCK_PROOF_OF_STAKE, consensusParams))
+    if (block.nBits != GetNextTargetRequired(pindexPrev, fProofOfStake, consensusParams))
         return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "bad-diffbits", "incorrect proof of work/stake");
 
     // Check against checkpoints
@@ -4903,7 +4927,7 @@ double GuessVerificationProgress(const ChainTxData& data, const CBlockIndex *pin
 // guaranteed to be in main chain by sync-checkpoint. This rule is
 // introduced to help nodes establish a consistent view of the coin
 // age (trust score) of competing branches.
-bool GetCoinAge(const CTransaction& tx, const CCoinsViewCache &view, uint64_t& nCoinAge, unsigned int nTimeTx, bool isTrueCoinAge)
+bool GetCoinAge(const CTransaction& tx, const CCoinsViewCache &view, uint64_t& nCoinAge)
 {
     arith_uint256 bnCentSecond = 0;  // coin age in the unit of cent-seconds
     nCoinAge = 0;
@@ -4915,15 +4939,17 @@ bool GetCoinAge(const CTransaction& tx, const CCoinsViewCache &view, uint64_t& n
     if (!g_txindex)
         return false;  // Transaction index not available
 
+    unsigned int nTime = tx.nTime;
+
     for (const auto& txin : tx.vin)
     {
         // First try finding the previous transaction in database
         const COutPoint &prevout = txin.prevout;
         Coin coin;
 
-        if (isTrueCoinAge && !view.GetCoin(prevout, coin))
+        if (!view.GetCoin(prevout, coin))
             continue;  // previous transaction not in main chain
-        if (nTimeTx < coin.nTime)
+        if (nTime < coin.nTime)
             return false;  // Transaction timestamp violation
 
         CDiskTxPos postx;
@@ -4951,25 +4977,18 @@ bool GetCoinAge(const CTransaction& tx, const CCoinsViewCache &view, uint64_t& n
         if (txPrev->GetHash() != prevout.hash)
             return error("%s() : txid mismatch in GetCoinAge()", __PRETTY_FUNCTION__);
 
-        if (header.GetBlockTime() + Params().GetConsensus().nStakeMinAge > nTimeTx)
+        if (header.GetBlockTime() + Params().GetConsensus().nStakeMinAge > nTime)
             continue; // only count coins meeting min age requirement
 
         int64_t nValueIn = txPrev->vout[txin.prevout.n].nValue;
-        int nEffectiveAge = nTimeTx-(txPrev->nTime ? txPrev->nTime : header.GetBlockTime());
-
-        if (!isTrueCoinAge || IsProtocolV09(nTimeTx))
-            nEffectiveAge = std::min(nEffectiveAge, 365 * 24 * 60 * 60);
-
-        bnCentSecond += arith_uint256(nValueIn) * nEffectiveAge / CENT;
-
-        if (gArgs.GetBoolArg("-printcoinage", false))
-            LogPrintf("coin age nValueIn=%-12lld nTimeDiff=%d bnCentSecond=%s\n", nValueIn, nEffectiveAge, bnCentSecond.ToString());
+        bnCentSecond += arith_uint256(nValueIn) * (nTime - txPrev->nTime) / CENT;
     }
 
     arith_uint256 bnCoinDay = bnCentSecond * CENT / COIN / (24 * 60 * 60);
     if (gArgs.GetBoolArg("-printcoinage", false))
         LogPrintf("coin age bnCoinDay=%s\n", bnCoinDay.ToString());
     nCoinAge = bnCoinDay.GetLow64();
+
     return true;
 }
 

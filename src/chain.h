@@ -236,22 +236,17 @@ public:
 
     bool IsProofOfWork() const
     {
-        return !(nFlags & BLOCK_PROOF_OF_STAKE);
+        return !IsProofOfStake();
     }
 
     bool IsProofOfStake() const
     {
-        return (nFlags & BLOCK_PROOF_OF_STAKE);
-    }
-
-    void SetProofOfStake()
-    {
-        nFlags |= BLOCK_PROOF_OF_STAKE;
+        return nNonce == 0;
     }
 
     unsigned int GetStakeEntropyBit() const
     {
-        return ((nFlags & BLOCK_STAKE_ENTROPY) >> 1);
+        return ((GetBlockHash().GetLow64()) & 1llu);
     }
 
     bool SetStakeEntropyBit(unsigned int nEntropyBit)
@@ -517,12 +512,9 @@ public:
         READWRITE(obj.nMoneySupply);
         READWRITE(obj.nFlags);
         READWRITE(obj.nStakeModifier);
-        if (obj.nFlags & BLOCK_PROOF_OF_STAKE)
-        {
-            READWRITE(obj.prevoutStake);
-            READWRITE(obj.nStakeTime);
-            READWRITE(obj.hashProofOfStake);
-        }
+        READWRITE(obj.prevoutStake);
+        READWRITE(obj.nStakeTime);
+        READWRITE(obj.hashProofOfStake);
 
         // block header
         READWRITE(obj.nVersion);

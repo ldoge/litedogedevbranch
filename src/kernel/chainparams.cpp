@@ -79,13 +79,13 @@ public:
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.bnInitialHashTarget = uint256S("0000000000ffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~arith_uint256(0) >> 40;
 
-        consensus.nTargetTimespan = 7 * 24 * 60 * 60;  // one week
-        consensus.nStakeTargetSpacing = 10 * 60; // 10-minute block spacing
+        consensus.nTargetTimespan = 16 * 60;
+        consensus.nStakeTargetSpacing = 4 * 60;
         consensus.nTargetSpacingWorkMax = 12 * consensus.nStakeTargetSpacing; // 2-hour
         consensus.nPowTargetSpacing = consensus.nStakeTargetSpacing;
-        consensus.nStakeMinAge = 60 * 60 * 24 * 30; // minimum age for coin age
+        consensus.nStakeMinAge =  8 * 60 * 60;
         consensus.nStakeMaxAge = 60 * 60 * 24 * 90;
-        consensus.nModifierInterval = 6 * 60 * 60; // Modifier interval: time to elapse before new modifier is computed
+        consensus.nModifierInterval = 10 * 60;
         consensus.nCoinbaseMaturity = 500;
 
         consensus.fPowAllowMinDifficultyBlocks = false;
@@ -151,11 +151,9 @@ public:
 
         chainTxData = ChainTxData{
             // Data as of block 3125be5493e80431952593cce42b160019671108103735509238830939e1c9a3 (height 650000).
-            1666903503, // * UNIX timestamp of last known number of transactions
-            2145533,    // * total number of transactions between genesis and that timestamp
-                        //   (the tx=... number in the ChainStateFlushed debug.log lines)
-            0.006673443 // * estimated number of transactions per second after that timestamp
-                        //   2145533/(1666903503-1345400356) = 0.006673443
+            1426450258,
+            1,
+            1,
         };
     }
 };
