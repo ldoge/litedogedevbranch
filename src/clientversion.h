@@ -12,7 +12,7 @@
 #endif //HAVE_CONFIG_H
 
 // Check that required client information is defined
-#if !defined(PEERCOIN_VERSION_MAJOR) || !defined(PEERCOIN_VERSION_MINOR) || !defined(PEERCOIN_VERSION_REVISION) || !defined(PEERCOIN_VERSION_BUILD)
+#if !defined(LITEDOGE_VERSION_MAJOR) || !defined(LITEDOGE_VERSION_MINOR) || !defined(LITEDOGE_VERSION_REVISION) || !defined(LITEDOGE_VERSION_BUILD)
 #error Client version information missing: version is not defined by bitcoin-config.h or in any other way
 #endif
 
@@ -36,11 +36,11 @@ static const int CLIENT_VERSION =
                          +       1 * CLIENT_VERSION_BUILD;
 
 // note: peercoin version is used for display purpose AND to accept alerts
-static const int PEERCOIN_VERSION =
-                           1000000 * PEERCOIN_VERSION_MAJOR
-                         +   10000 * PEERCOIN_VERSION_MINOR
-                         +     100 * PEERCOIN_VERSION_REVISION
-                         +       1 * PEERCOIN_VERSION_BUILD;
+static const int LITEDOGE_VERSION =
+                           1000000 * LITEDOGE_VERSION_MAJOR
+                         +   10000 * LITEDOGE_VERSION_MINOR
+                         +     100 * LITEDOGE_VERSION_REVISION
+                         +       1 * LITEDOGE_VERSION_BUILD;
 
 extern const std::string CLIENT_NAME;
 

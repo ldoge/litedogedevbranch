@@ -2,10 +2,10 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-bin_PROGRAMS += qt/peercoin-qt
+bin_PROGRAMS += qt/litedoge-qt
 
 if BUILD_BITCOIN_GUI
-  bin_PROGRAMS += peercoin-gui
+  bin_PROGRAMS += litedoge-gui
 endif
 
 EXTRA_LIBRARIES += qt/libbitcoinqt.a
@@ -193,11 +193,11 @@ QT_RES_FONTS = \
 QT_RES_ICONS = \
   qt/res/icons/add.png \
   qt/res/icons/address-book.png \
-  qt/res/icons/peercoin.ico \
-  qt/res/icons/peercoin_testnet.ico \
+  qt/res/icons/litedoge.ico \
+  qt/res/icons/litedoge_testnet.ico \
   qt/res/icons/bitcoin.png \
-  qt/res/icons/peercoin.png \
-  qt/res/icons/peercoin_testnet.png \
+  qt/res/icons/litedoge.png \
+  qt/res/icons/litedoge_testnet.png \
   qt/res/icons/chevron.png \
   qt/res/icons/clock1.png \
   qt/res/icons/clock2.png \
@@ -252,7 +252,6 @@ QT_RES_ICONS = \
   qt/res/images/controls/scroll-up.png \
   qt/res/images/logo.png \
   qt/res/images/logomask.png \
-  qt/res/images/ladybug.png \
   qt/res/images/splash.png \
   qt/res/images/splash_testnet.png \
   qt/res/images/transparent-background.png \
@@ -360,43 +359,43 @@ QT_FORMS_H=$(join $(dir $(QT_FORMS_UI)),$(addprefix ui_, $(notdir $(QT_FORMS_UI:
 # Most files will depend on the forms and moc files as includes. Generate them
 # before anything else.
 $(QT_MOC): $(QT_FORMS_H)
-$(qt_libbitcoinqt_a_OBJECTS) $(qt_peercoin_qt_OBJECTS) $(peercoin_gui_OBJECTS) : | $(QT_MOC)
+$(qt_libbitcoinqt_a_OBJECTS) $(qt_litedoge_qt_OBJECTS) $(litedoge_gui_OBJECTS) : | $(QT_MOC)
 
 # bitcoin-qt and bitcoin-gui binaries #
-peercoin_qt_cppflags = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BITCOIN_QT_INCLUDES) \
+litedoge_qt_cppflags = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BITCOIN_QT_INCLUDES) \
   $(QT_INCLUDES) $(QR_CFLAGS)
-peercoin_qt_cxxflags = $(AM_CXXFLAGS) $(QT_PIE_FLAGS)
+litedoge_qt_cxxflags = $(AM_CXXFLAGS) $(QT_PIE_FLAGS)
 
-peercoin_qt_sources = qt/main.cpp
+litedoge_qt_sources = qt/main.cpp
 if TARGET_WINDOWS
-  peercoin_qt_sources += $(BITCOIN_QT_RC)
+  litedoge_qt_sources += $(BITCOIN_QT_RC)
 endif
-peercoin_qt_ldadd = qt/libbitcoinqt.a $(LIBBITCOIN_NODE)
+litedoge_qt_ldadd = qt/libbitcoinqt.a $(LIBBITCOIN_NODE)
 if ENABLE_WALLET
-peercoin_qt_ldadd += $(LIBBITCOIN_UTIL) $(LIBBITCOIN_WALLET)
+litedoge_qt_ldadd += $(LIBBITCOIN_UTIL) $(LIBBITCOIN_WALLET)
 endif
 if ENABLE_ZMQ
-peercoin_qt_ldadd += $(LIBBITCOIN_ZMQ) $(ZMQ_LIBS)
+litedoge_qt_ldadd += $(LIBBITCOIN_ZMQ) $(ZMQ_LIBS)
 endif
-peercoin_qt_ldadd += $(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTIL) $(LIBBITCOIN_CONSENSUS) $(LIBBITCOIN_CRYPTO) $(LIBUNIVALUE) $(LIBLEVELDB) $(LIBLEVELDB_SSE42) $(LIBMEMENV) \
+litedoge_qt_ldadd += $(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTIL) $(LIBBITCOIN_CONSENSUS) $(LIBBITCOIN_CRYPTO) $(LIBUNIVALUE) $(LIBLEVELDB) $(LIBLEVELDB_SSE42) $(LIBMEMENV) \
   $(QT_LIBS) $(QT_DBUS_LIBS) $(QR_LIBS) $(BDB_LIBS) $(MINIUPNPC_LIBS) $(NATPMP_LIBS) $(LIBSECP256K1) \
   $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(SQLITE_LIBS) $(CRYPTO_LIBS)
-peercoin_qt_ldflags = $(RELDFLAGS) $(AM_LDFLAGS) $(QT_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) $(PTHREAD_FLAGS)
-peercoin_qt_libtoolflags = $(AM_LIBTOOLFLAGS) --tag CXX
+litedoge_qt_ldflags = $(RELDFLAGS) $(AM_LDFLAGS) $(QT_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) $(PTHREAD_FLAGS)
+litedoge_qt_libtoolflags = $(AM_LIBTOOLFLAGS) --tag CXX
 
-qt_peercoin_qt_CPPFLAGS = $(peercoin_qt_cppflags)
-qt_peercoin_qt_CXXFLAGS = $(peercoin_qt_cxxflags)
-qt_peercoin_qt_SOURCES = $(peercoin_qt_sources) init/bitcoin-qt.cpp
-qt_peercoin_qt_LDADD = $(peercoin_qt_ldadd)
-qt_peercoin_qt_LDFLAGS = $(peercoin_qt_ldflags)
-qt_peercoin_qt_LIBTOOLFLAGS = $(peercoin_qt_libtoolflags)
+qt_litedoge_qt_CPPFLAGS = $(litedoge_qt_cppflags)
+qt_litedoge_qt_CXXFLAGS = $(litedoge_qt_cxxflags)
+qt_litedoge_qt_SOURCES = $(litedoge_qt_sources) init/bitcoin-qt.cpp
+qt_litedoge_qt_LDADD = $(litedoge_qt_ldadd)
+qt_litedoge_qt_LDFLAGS = $(litedoge_qt_ldflags)
+qt_litedoge_qt_LIBTOOLFLAGS = $(litedoge_qt_libtoolflags)
 
-peercoin_gui_CPPFLAGS = $(peercoin_qt_cppflags)
-peercoin_gui_CXXFLAGS = $(peercoin_qt_cxxflags)
-peercoin_gui_SOURCES = $(peercoin_qt_sources) init/bitcoin-gui.cpp
-peercoin_gui_LDADD = $(peercoin_qt_ldadd) $(LIBBITCOIN_IPC) $(LIBBITCOIN_UTIL) $(LIBMULTIPROCESS_LIBS)
-peercoin_gui_LDFLAGS = $(peercoin_qt_ldflags)
-peercoin_gui_LIBTOOLFLAGS = $(peercoin_qt_libtoolflags)
+litedoge_gui_CPPFLAGS = $(litedoge_qt_cppflags)
+litedoge_gui_CXXFLAGS = $(litedoge_qt_cxxflags)
+litedoge_gui_SOURCES = $(litedoge_qt_sources) init/bitcoin-gui.cpp
+litedoge_gui_LDADD = $(litedoge_qt_ldadd) $(LIBBITCOIN_IPC) $(LIBBITCOIN_UTIL) $(LIBMULTIPROCESS_LIBS)
+litedoge_gui_LDFLAGS = $(litedoge_qt_ldflags)
+litedoge_gui_LIBTOOLFLAGS = $(litedoge_qt_libtoolflags)
 
 #locale/foo.ts -> locale/foo.qm
 QT_QM=$(QT_TS:.ts=.qm)
@@ -431,10 +430,10 @@ CLEAN_QT = $(nodist_qt_libbitcoinqt_a_SOURCES) $(QT_QM) $(QT_FORMS_H) qt/*.gcda 
 
 CLEANFILES += $(CLEAN_QT)
 
-peercoin_qt_clean: FORCE
-	rm -f $(CLEAN_QT) $(qt_libbitcoinqt_a_OBJECTS) $(qt_peercoin_qt_OBJECTS) qt/bitcoin-qt$(EXEEXT) $(LIBBITCOINQT)
+litedoge_qt_clean: FORCE
+	rm -f $(CLEAN_QT) $(qt_libbitcoinqt_a_OBJECTS) $(qt_litedoge_qt_OBJECTS) qt/bitcoin-qt$(EXEEXT) $(LIBBITCOINQT)
 
-peercoin_qt : qt/bitcoin-qt$(EXEEXT)
+litedoge_qt : qt/bitcoin-qt$(EXEEXT)
 
 APK_LIB_DIR = qt/android/libs/$(ANDROID_ARCH)
 QT_BASE_VERSION = $(lastword $(shell $(MOC) --version))

@@ -86,7 +86,6 @@ BOOST_AUTO_TEST_CASE(get_next_work_beforev9pos)
 
     CBlockIndex pindexLast;
     pindexLast.nHeight = 5;
-    pindexLast.SetProofOfStake();
     pindexLast.pprev = &pindexSecondLast;
     pindexLast.nTime = 1581334441;
     pindexLast.nBits = 0x1c00ff4a;
@@ -117,14 +116,12 @@ BOOST_AUTO_TEST_CASE(get_next_work_beforev9pos2)
 
     CBlockIndex pindexPos;
     pindexPos.nHeight = 5;
-    pindexPos.SetProofOfStake();
     pindexPos.pprev = &pindexSecondLast;
     pindexPos.nTime = 1581334441;
     pindexPos.nBits = 0x1c00ff4a;
 
     CBlockIndex pindexLast;
     pindexLast.nHeight = 6;
-    pindexLast.SetProofOfStake();
     pindexLast.pprev = &pindexPos;
     pindexLast.nTime = 1581334442;
     pindexLast.nBits = 0x1c00ff4a;
@@ -140,7 +137,6 @@ BOOST_AUTO_TEST_CASE(get_next_work_afterv9)
 
     CBlockIndex pindexThirdLast;
     pindexThirdLast.nHeight = 2;
-    pindexThirdLast.SetProofOfStake();
     pindexThirdLast.nTime = 1598334400;
     pindexThirdLast.nBits = 0x1c00ffff;
 
@@ -165,7 +161,6 @@ BOOST_AUTO_TEST_CASE(get_next_work_afterv9pos)
 
     CBlockIndex pindexFourthLast;
     pindexFourthLast.nHeight = 2;
-    pindexFourthLast.SetProofOfStake();
     pindexFourthLast.nTime = 1598334400;
     pindexFourthLast.nBits = 0x1c00ffff;
 
@@ -183,7 +178,6 @@ BOOST_AUTO_TEST_CASE(get_next_work_afterv9pos)
 
     CBlockIndex pindexLast;
     pindexLast.nHeight = 5;
-    pindexLast.SetProofOfStake();
     pindexLast.pprev = &pindexSecondLast;
     pindexLast.nTime = 1598334441;
     pindexLast.nBits = 0x1c00ff4a;
@@ -197,7 +191,6 @@ BOOST_AUTO_TEST_CASE(get_next_work_afterv9pos2)
 
     CBlockIndex pindexFourthLast;
     pindexFourthLast.nHeight = 2;
-    pindexFourthLast.SetProofOfStake();
     pindexFourthLast.nTime = 1598334400;
     pindexFourthLast.nBits = 0x1c00ffff;
 
@@ -215,14 +208,12 @@ BOOST_AUTO_TEST_CASE(get_next_work_afterv9pos2)
 
     CBlockIndex pindexPos;
     pindexPos.nHeight = 5;
-    pindexPos.SetProofOfStake();
     pindexPos.pprev = &pindexSecondLast;
     pindexPos.nTime = 1598334441;
     pindexPos.nBits = 0x1c00ff4a;
 
     CBlockIndex pindexLast;
     pindexLast.nHeight = 6;
-    pindexLast.SetProofOfStake();
     pindexLast.pprev = &pindexPos;
     pindexLast.nTime = 1598334442;
     pindexLast.nBits = 0x1c00ff4a;
@@ -236,7 +227,6 @@ BOOST_AUTO_TEST_CASE(get_next_work_afterv9pos7200)
 
     CBlockIndex pindexFourthLast;
     pindexFourthLast.nHeight = 2;
-    pindexFourthLast.SetProofOfStake();
     pindexFourthLast.nTime = 1598334400;
     pindexFourthLast.nBits = 0x1c00ffff;
 
@@ -254,14 +244,12 @@ BOOST_AUTO_TEST_CASE(get_next_work_afterv9pos7200)
 
     CBlockIndex pindexPos;
     pindexPos.nHeight = 5;
-    pindexPos.SetProofOfStake();
     pindexPos.pprev = &pindexSecondLast;
     pindexPos.nTime = 1598334441;
     pindexPos.nBits = 0x1c00ff4a;
 
     CBlockIndex pindexLast;
     pindexLast.nHeight = 6;
-    pindexLast.SetProofOfStake();
     pindexLast.pprev = &pindexPos;
     pindexLast.nTime = 1598344442; // 10001 seconds after block 5
     pindexLast.nBits = 0x1c00ff4a;
@@ -283,7 +271,6 @@ BOOST_AUTO_TEST_CASE(get_next_work_beforev9real)
 
     CBlockIndex pindex495492;
     pindex495492.nHeight = 495492;
-    pindex495492.SetProofOfStake();
     pindex495492.nTime = 1588163347;
     pindex495492.nBits = 0x1c1ee519;
 
@@ -295,7 +282,6 @@ BOOST_AUTO_TEST_CASE(get_next_work_beforev9real)
 
     CBlockIndex pindex495494;
     pindex495494.nHeight = 495494;
-    pindex495494.SetProofOfStake();
     pindex495494.pprev = &pindex495493;
     pindex495494.nTime = 1588164450;
     pindex495494.nBits = 0x1c1ef882;
@@ -308,49 +294,42 @@ BOOST_AUTO_TEST_CASE(get_next_work_beforev9real)
 
     CBlockIndex pindex495496;
     pindex495496.nHeight = 495496;
-    pindex495496.SetProofOfStake();
     pindex495496.pprev = &pindex495495;
     pindex495496.nTime = 1588164959;
     pindex495496.nBits = 0x1c1f05ae;
 
     CBlockIndex pindex495497;
     pindex495497.nHeight = 495497;
-    pindex495497.SetProofOfStake();
     pindex495497.pprev = &pindex495496;
     pindex495497.nTime = 1588165390;
     pindex495497.nBits = 0x1c1f034a;
 
     CBlockIndex pindex495498;
     pindex495498.nHeight = 495498;
-    pindex495498.SetProofOfStake();
     pindex495498.pprev = &pindex495497;
     pindex495498.nTime = 1588165829;
     pindex495498.nBits = 0x1c1efedb;
 
     CBlockIndex pindex495499;
     pindex495499.nHeight = 495499;
-    pindex495499.SetProofOfStake();
     pindex495499.pprev = &pindex495498;
     pindex495499.nTime = 1588165881;
     pindex495499.nBits = 0x1c1efaa2;
 
     CBlockIndex pindex495500;
     pindex495500.nHeight = 495500;
-    pindex495500.SetProofOfStake();
     pindex495500.pprev = &pindex495499;
     pindex495500.nTime = 1588169146;
     pindex495500.nBits = 0x1c1eec46;
 
     CBlockIndex pindex495501;
     pindex495501.nHeight = 495501;
-    pindex495501.SetProofOfStake();
     pindex495501.pprev = &pindex495500;
     pindex495501.nTime = 1588170378;
     pindex495501.nBits = 0x1c1f31f8;
 
     CBlockIndex pindex495502;
     pindex495502.nHeight = 495502;
-    pindex495502.SetProofOfStake();
     pindex495502.pprev = &pindex495501;
     pindex495502.nTime = 1588170817;
     pindex495502.nBits = 0x1c1f42a4;
@@ -397,7 +376,6 @@ BOOST_AUTO_TEST_CASE(get_next_work_afterv9real)
 
     CBlockIndex pindex495492;
     pindex495492.nHeight = 495492;
-    pindex495492.SetProofOfStake();
     pindex495492.nTime = 1598163347;
     pindex495492.nBits = 0x1c1ee519;
 
@@ -409,7 +387,6 @@ BOOST_AUTO_TEST_CASE(get_next_work_afterv9real)
 
     CBlockIndex pindex495494;
     pindex495494.nHeight = 495494;
-    pindex495494.SetProofOfStake();
     pindex495494.pprev = &pindex495493;
     pindex495494.nTime = 1598164450;
     pindex495494.nBits = 0x1c1ef882;
@@ -422,49 +399,42 @@ BOOST_AUTO_TEST_CASE(get_next_work_afterv9real)
 
     CBlockIndex pindex495496;
     pindex495496.nHeight = 495496;
-    pindex495496.SetProofOfStake();
     pindex495496.pprev = &pindex495495;
     pindex495496.nTime = 1598164959;
     pindex495496.nBits = 0x1c1f05ae;
 
     CBlockIndex pindex495497;
     pindex495497.nHeight = 495497;
-    pindex495497.SetProofOfStake();
     pindex495497.pprev = &pindex495496;
     pindex495497.nTime = 1598165390;
     pindex495497.nBits = 0x1c1f034a;
 
     CBlockIndex pindex495498;
     pindex495498.nHeight = 495498;
-    pindex495498.SetProofOfStake();
     pindex495498.pprev = &pindex495497;
     pindex495498.nTime = 1598165829;
     pindex495498.nBits = 0x1c1efedb;
 
     CBlockIndex pindex495499;
     pindex495499.nHeight = 495499;
-    pindex495499.SetProofOfStake();
     pindex495499.pprev = &pindex495498;
     pindex495499.nTime = 1598165881;
     pindex495499.nBits = 0x1c1efaa2;
 
     CBlockIndex pindex495500;
     pindex495500.nHeight = 495500;
-    pindex495500.SetProofOfStake();
     pindex495500.pprev = &pindex495499;
     pindex495500.nTime = 1598169146;
     pindex495500.nBits = 0x1c1eec46;
 
     CBlockIndex pindex495501;
     pindex495501.nHeight = 495501;
-    pindex495501.SetProofOfStake();
     pindex495501.pprev = &pindex495500;
     pindex495501.nTime = 1598170378;
     pindex495501.nBits = 0x1c1f31f8;
 
     CBlockIndex pindex495502;
     pindex495502.nHeight = 495502;
-    pindex495502.SetProofOfStake();
     pindex495502.pprev = &pindex495501;
     pindex495502.nTime = 1598170817;
     pindex495502.nBits = 0x1c1f42a4;

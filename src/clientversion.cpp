@@ -18,7 +18,7 @@
  */
 const std::string CLIENT_NAME("Satoshi");
 
-#define CLIENT_VERSION_SUFFIX " Anisoptera"
+#define CLIENT_VERSION_SUFFIX ""
 
 #ifdef HAVE_BUILD_INFO
 #include <obj/build.h>
@@ -35,8 +35,8 @@ const std::string CLIENT_NAME("Satoshi");
     #define BUILD_DESC BUILD_GIT_TAG
     #define BUILD_SUFFIX ""
 #else
-    #define BUILD_DESC "v" STRINGIZE(PEERCOIN_VERSION_MAJOR) "." STRINGIZE(PEERCOIN_VERSION_MINOR) \
-                       "." STRINGIZE(PEERCOIN_VERSION_REVISION) "." STRINGIZE(PEERCOIN_VERSION_BUILD)
+    #define BUILD_DESC "v" STRINGIZE(LITEDOGE_VERSION_MAJOR) "." STRINGIZE(LITEDOGE_VERSION_MINOR) \
+                       "." STRINGIZE(LITEDOGE_VERSION_REVISION) "." STRINGIZE(LITEDOGE_VERSION_BUILD)
     #if CLIENT_VERSION_IS_RELEASE
         #define BUILD_SUFFIX ""
     #elif defined(BUILD_GIT_COMMIT)
@@ -76,7 +76,7 @@ std::string FormatSubVersion(const std::string& name, int nClientVersion, const 
         ss << ")";
     }
     ss << "/";
-    ss << "Peercoin:" << FormatVersion(PEERCOIN_VERSION);
+    ss << "Peercoin:" << FormatVersion(LITEDOGE_VERSION);
     ss << "(" << FormatFullVersion() << ")/";
     return ss.str();
 }
@@ -95,7 +95,7 @@ std::string CopyrightHolders(const std::string& strPrefix)
 
 std::string LicenseInfo()
 {
-    const std::string URL_SOURCE_CODE = "<https://github.com/peercoin/peercoin>";
+    const std::string URL_SOURCE_CODE = "<https://github.com/ldoge/LDOGE>";
 
     return CopyrightHolders(strprintf(_("Copyright (C) %i-%i").translated, 2009, COPYRIGHT_YEAR) + " ") + "\n" +
            "\n" +

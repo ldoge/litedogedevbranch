@@ -56,7 +56,7 @@
 // Application startup time (used for uptime calculation)
 const int64_t nStartupTime = GetTime();
 
-const char * const BITCOIN_CONF_FILENAME = "peercoin.conf";
+const char * const BITCOIN_CONF_FILENAME = "litedoge.conf";
 const char * const BITCOIN_SETTINGS_FILENAME = "settings.json";
 
 ArgsManager gArgs;
@@ -717,7 +717,7 @@ fs::path GetDefaultDataDir()
     // Unix: ~/.peercoin
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "Peercoin";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "LiteDoge";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -727,10 +727,10 @@ fs::path GetDefaultDataDir()
         pathRet = fs::path(pszHome);
 #ifdef MAC_OSX
     // Mac
-    return pathRet / "Library/Application Support/Peercoin";
+    return pathRet / "Library/Application Support/LiteDoge";
 #else
     // Unix
-    return pathRet / ".peercoin";
+    return pathRet / ".litedoge";
 #endif
 #endif
 }
