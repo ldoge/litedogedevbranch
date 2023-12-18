@@ -198,18 +198,10 @@ bool Consensus::CheckTxInputs(const CTransaction& tx, TxValidationState& state, 
         }
     }
 
-    if (tx.IsCoinStake())
-    {
-        // peercoin: coin stake tx earns reward instead of paying fee
-        uint64_t nCoinAge;
-        if (!GetCoinAge(tx, inputs, nCoinAge, nTimeTx))
-            return state.Invalid(TxValidationResult::TX_CONSENSUS, "unable to get coin age for coinstake");
-        CAmount nStakeReward = tx.GetValueOut() - nValueIn;
-        CAmount nCoinstakeCost = (GetMinFee(tx, nTimeTx) < PERKB_TX_FEE) ? 0 : (GetMinFee(tx, nTimeTx) - PERKB_TX_FEE);
-        if (nMoneySupply && nStakeReward > GetProofOfStakeReward(nCoinAge, nTimeTx, nMoneySupply) - nCoinstakeCost)
-            return state.Invalid(TxValidationResult::TX_CONSENSUS, "bad-txns-coinstake-too-large");
-    }
-    else
+    // stake amount validation has been moved to validation.cpp/ConnectBlock as LiteDoge's
+    // functions arent purely contextual (height)
+
+    if (!tx.IsCoinStake())
     {
         const CAmount value_out = tx.GetValueOut();
         if (nValueIn < value_out) {

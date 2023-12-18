@@ -10,9 +10,14 @@
 
 uint256 CBlockHeader::GetHash() const
 {
-    CBlockHeader tmp(*this);
-    tmp.nFlags = 0;
-    return SerializeHash(tmp);
+    if (nVersion > 6)
+        return SerializeHash(*this);
+    return GetPoWHash();
+}
+
+uint256 CBlockHeader::GetPoWHash() const
+{
+    return scrypt_1024_1_1_256(*this);
 }
 
 std::string CBlock::ToString() const
