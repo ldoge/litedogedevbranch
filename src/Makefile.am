@@ -39,10 +39,10 @@ if ENABLE_ZMQ
 LIBBITCOIN_ZMQ=libbitcoin_zmq.a
 endif
 if BUILD_BITCOIN_LIBS
-LIBBITCOINCONSENSUS=libpeercoinconsensus.la
+LIBBITCOINCONSENSUS=liblitedogeconsensus.la
 endif
 if BUILD_BITCOIN_KERNEL_LIB
-LIBBITCOINKERNEL=libpeercoinkernel.la
+LIBBITCOINKERNEL=liblitedogekernel.la
 endif
 if ENABLE_WALLET
 LIBBITCOIN_WALLET=libbitcoin_wallet.a
@@ -85,33 +85,33 @@ EXTRA_LIBRARIES += \
   $(LIBBITCOIN_ZMQ)
 
 if BUILD_BITCOIND
-  bin_PROGRAMS += peercoind
+  bin_PROGRAMS += litedoged
 endif
 
 if BUILD_BITCOIN_NODE
-  bin_PROGRAMS += peercoin-node
+  bin_PROGRAMS += litedoge-node
 endif
 
 if BUILD_BITCOIN_CLI
-  bin_PROGRAMS += peercoin-cli
+  bin_PROGRAMS += litedoge-cli
 endif
 
 if BUILD_BITCOIN_TX
-  bin_PROGRAMS += peercoin-tx
+  bin_PROGRAMS += litedoge-tx
 endif
 
 if ENABLE_WALLET
 if BUILD_BITCOIN_WALLET
-  bin_PROGRAMS += peercoin-wallet
+  bin_PROGRAMS += litedoge-wallet
 endif
 endif
 
 if BUILD_BITCOIN_UTIL
-  bin_PROGRAMS += peercoin-util
+  bin_PROGRAMS += litedoge-util
 endif
 
 if BUILD_BITCOIN_CHAINSTATE
-  bin_PROGRAMS += peercoin-chainstate
+  bin_PROGRAMS += litedoge-chainstate
 endif
 
 .PHONY: FORCE check-symbols check-security
@@ -343,7 +343,7 @@ BITCOIN_CORE_H = \
   zmq/zmqpublishnotifier.h \
   zmq/zmqrpc.h \
   zmq/zmqutil.h \
-## --- peercoin headers start from this line --- ##
+## --- litedoge headers start from this line --- ##
   kernel.h \
   kernelrecord.h
 
@@ -462,7 +462,7 @@ endif
 #
 
 
-# wallet: shared between peercoind and peercoin-qt, but only linked
+# wallet: shared between litedoged and litedoge-qt, but only linked
 # when wallet enabled
 libbitcoin_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BOOST_CPPFLAGS) $(BDB_CPPFLAGS) $(SQLITE_CFLAGS)
 libbitcoin_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
@@ -634,7 +634,7 @@ libbitcoin_consensus_a_SOURCES = \
   version.h
 #
 
-# common: shared between peercoind, and peercoin-qt and non-server tools
+# common: shared between litedoged, and litedoge-qt and non-server tools
 libbitcoin_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_common_a_SOURCES = \
@@ -725,7 +725,7 @@ libbitcoin_util_a_SOURCES = \
   $(BITCOIN_CORE_H)
 #
 
-# cli: shared between peercoin-cli and peercoin-qt
+# cli: shared between litedoge-cli and litedoge-qt
 libbitcoin_cli_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_cli_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_cli_a_SOURCES = \
@@ -761,67 +761,67 @@ bitcoin_bin_ldadd = \
 
 bitcoin_bin_ldadd += $(BDB_LIBS) $(MINIUPNPC_LIBS) $(NATPMP_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS) $(SQLITE_LIBS) $(CRYPTO_LIBS)
 
-peercoind_SOURCES = $(bitcoin_daemon_sources) init/bitcoind.cpp
-peercoind_CPPFLAGS = $(bitcoin_bin_cppflags)
-peercoind_CXXFLAGS = $(bitcoin_bin_cxxflags)
-peercoind_LDFLAGS = $(bitcoin_bin_ldflags)
-peercoind_LDADD = $(LIBBITCOIN_NODE) $(bitcoin_bin_ldadd)
+litedoged_SOURCES = $(bitcoin_daemon_sources) init/bitcoind.cpp
+litedoged_CPPFLAGS = $(bitcoin_bin_cppflags)
+litedoged_CXXFLAGS = $(bitcoin_bin_cxxflags)
+litedoged_LDFLAGS = $(bitcoin_bin_ldflags)
+litedoged_LDADD = $(LIBBITCOIN_NODE) $(bitcoin_bin_ldadd)
 
-peercoin_node_SOURCES = $(bitcoin_daemon_sources) init/bitcoin-node.cpp
-peercoin_node_CPPFLAGS = $(bitcoin_bin_cppflags)
-peercoin_node_CXXFLAGS = $(bitcoin_bin_cxxflags)
-peercoin_node_LDFLAGS = $(bitcoin_bin_ldflags)
-peercoin_node_LDADD = $(LIBBITCOIN_NODE) $(bitcoin_bin_ldadd) $(LIBBITCOIN_IPC) $(LIBMULTIPROCESS_LIBS)
+litedoge_node_SOURCES = $(bitcoin_daemon_sources) init/bitcoin-node.cpp
+litedoge_node_CPPFLAGS = $(bitcoin_bin_cppflags)
+litedoge_node_CXXFLAGS = $(bitcoin_bin_cxxflags)
+litedoge_node_LDFLAGS = $(bitcoin_bin_ldflags)
+litedoge_node_LDADD = $(LIBBITCOIN_NODE) $(bitcoin_bin_ldadd) $(LIBBITCOIN_IPC) $(LIBMULTIPROCESS_LIBS)
 
-# peercoin-cli binary #
-peercoin_cli_SOURCES = bitcoin-cli.cpp
-peercoin_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
-peercoin_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-peercoin_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) $(PTHREAD_FLAGS)
+# litedoge-cli binary #
+litedoge_cli_SOURCES = bitcoin-cli.cpp
+litedoge_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
+litedoge_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+litedoge_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) $(PTHREAD_FLAGS)
 
 if TARGET_WINDOWS
-peercoin_cli_SOURCES += bitcoin-cli-res.rc
+litedoge_cli_SOURCES += bitcoin-cli-res.rc
 endif
 
-peercoin_cli_LDADD = \
+litedoge_cli_LDADD = \
   $(LIBBITCOIN_CLI) \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_COMMON) \
   $(LIBBITCOIN_UTIL) \
   $(LIBBITCOIN_CRYPTO)
 
-peercoin_cli_LDADD += $(CRYPTO_LIBS) $(EVENT_LIBS)
+litedoge_cli_LDADD += $(CRYPTO_LIBS) $(EVENT_LIBS)
 #
 
-# peercoin-tx binary #
-peercoin_tx_SOURCES = \
+# litedoge-tx binary #
+litedoge_tx_SOURCES = \
   bitcoin-tx.cpp \
   timedatadummy.cpp
-peercoin_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-peercoin_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-peercoin_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) $(PTHREAD_FLAGS)
+litedoge_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+litedoge_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+litedoge_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) $(PTHREAD_FLAGS)
 
 if TARGET_WINDOWS
-peercoin_tx_SOURCES += bitcoin-tx-res.rc
+litedoge_tx_SOURCES += bitcoin-tx-res.rc
 endif
 
-peercoin_tx_LDADD = \
+litedoge_tx_LDADD = \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_COMMON) \
   $(LIBBITCOIN_UTIL) \
   $(LIBBITCOIN_CONSENSUS) \
   $(LIBBITCOIN_CRYPTO) \
   $(LIBSECP256K1)
-peercoin_tx_LDADD += $(CRYPTO_LIBS)
+litedoge_tx_LDADD += $(CRYPTO_LIBS)
 #
 
 # bitcoin-wallet binary #
-peercoin_wallet_SOURCES = bitcoin-wallet.cpp
-peercoin_wallet_SOURCES += init/bitcoin-wallet.cpp
-peercoin_wallet_CPPFLAGS = $(bitcoin_bin_cppflags)
-peercoin_wallet_CXXFLAGS = $(bitcoin_bin_cxxflags)
-peercoin_wallet_LDFLAGS = $(bitcoin_bin_ldflags)
-peercoin_wallet_LDADD = \
+litedoge_wallet_SOURCES = bitcoin-wallet.cpp
+litedoge_wallet_SOURCES += init/bitcoin-wallet.cpp
+litedoge_wallet_CPPFLAGS = $(bitcoin_bin_cppflags)
+litedoge_wallet_CXXFLAGS = $(bitcoin_bin_cxxflags)
+litedoge_wallet_LDFLAGS = $(bitcoin_bin_ldflags)
+litedoge_wallet_LDADD = \
   $(LIBBITCOIN_WALLET_TOOL) \
   $(LIBBITCOIN_WALLET) \
   $(LIBBITCOIN_NODE) \
@@ -840,21 +840,21 @@ peercoin_wallet_LDADD = \
   $(CRYPTO_LIBS)
 
 if TARGET_WINDOWS
-peercoin_wallet_SOURCES += bitcoin-wallet-res.rc
+litedoge_wallet_SOURCES += bitcoin-wallet-res.rc
 endif
 #
 
 # bitcoin-util binary #
-peercoin_util_SOURCES = bitcoin-util.cpp
-peercoin_util_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-peercoin_util_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-peercoin_util_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) $(PTHREAD_FLAGS)
+litedoge_util_SOURCES = bitcoin-util.cpp
+litedoge_util_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+litedoge_util_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+litedoge_util_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) $(PTHREAD_FLAGS)
 
 if TARGET_WINDOWS
-peercoin_util_SOURCES += bitcoin-util-res.rc
+litedoge_util_SOURCES += bitcoin-util-res.rc
 endif
 
-peercoin_util_LDADD = \
+litedoge_util_LDADD = \
   $(LIBBITCOIN_COMMON) \
   $(LIBBITCOIN_UTIL) \
   $(LIBUNIVALUE) \
@@ -865,38 +865,38 @@ peercoin_util_LDADD = \
 
 
 # bitcoin-chainstate binary #
-peercoin_chainstate_SOURCES = bitcoin-chainstate.cpp
-peercoin_chainstate_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BOOST_CPPFLAGS)
-peercoin_chainstate_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+litedoge_chainstate_SOURCES = bitcoin-chainstate.cpp
+litedoge_chainstate_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BOOST_CPPFLAGS)
+litedoge_chainstate_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 
-peercoin_chainstate_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(PTHREAD_FLAGS) $(LIBTOOL_APP_LDFLAGS) -static
-peercoin_chainstate_LDADD = $(LIBBITCOINKERNEL)
+litedoge_chainstate_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(PTHREAD_FLAGS) $(LIBTOOL_APP_LDFLAGS) -static
+litedoge_chainstate_LDADD = $(LIBBITCOINKERNEL)
 
 # libtool is unable to calculate this indirect dependency, presumably because it's a subproject.
 # libsecp256k1 only needs to be linked in when libbitcoinkernel is static.
-peercoin_chainstate_LDADD += $(LIBSECP256K1)
+litedoge_chainstate_LDADD += $(LIBSECP256K1)
 #
 
-# peercoinkernel library #
+# litedogekernel library #
 if BUILD_BITCOIN_KERNEL_LIB
 lib_LTLIBRARIES += $(LIBBITCOINKERNEL)
 
-libpeercoinkernel_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(RELDFLAGS) $(PTHREAD_FLAGS)
-libpeercoinkernel_la_LIBADD = $(LIBBITCOIN_CRYPTO) $(LIBUNIVALUE) $(LIBLEVELDB) $(LIBMEMENV) $(LIBSECP256K1)
-libpeercoinkernel_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_BITCOIN_INTERNAL $(BOOST_CPPFLAGS) $(LEVELDB_CPPFLAGS) -I$(srcdir)/$(UNIVALUE_INCLUDE_DIR_INT)
+liblitedogekernel_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(RELDFLAGS) $(PTHREAD_FLAGS)
+liblitedogekernel_la_LIBADD = $(LIBBITCOIN_CRYPTO) $(LIBUNIVALUE) $(LIBLEVELDB) $(LIBMEMENV) $(LIBSECP256K1)
+liblitedogekernel_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_BITCOIN_INTERNAL $(BOOST_CPPFLAGS) $(LEVELDB_CPPFLAGS) -I$(srcdir)/$(UNIVALUE_INCLUDE_DIR_INT)
 
-# libpeercoinkernel requires default symbol visibility, explicitly specify that
+# liblitedogekernel requires default symbol visibility, explicitly specify that
 # here so that things still work even when user configures with
 #   --enable-reduce-exports
 #
 # Note this is a quick hack that will be removed as we incrementally define what
 # to export from the library.
-libpeercoinkernel_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) -fvisibility=default
+liblitedogekernel_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) -fvisibility=default
 
-# TODO: libpeercoinkernel is a work in progress consensus engine library, as more
+# TODO: liblitedogekernel is a work in progress consensus engine library, as more
 #       and more modules are decoupled from the consensus engine, this list will
 #       shrink to only those which are absolutely necessary.
-libpeercoinkernel_la_SOURCES = \
+liblitedogekernel_la_SOURCES = \
   kernel/bitcoinkernel.cpp \
   arith_uint256.cpp \
   chain.cpp \
@@ -979,21 +979,21 @@ libpeercoinkernel_la_SOURCES = \
 
 # Required for obj/build.h to be generated first.
 # More details: https://www.gnu.org/software/automake/manual/html_node/Built-Sources-Example.html
-libpeercoinkernel_la-clientversion.l$(OBJEXT): obj/build.h
+liblitedogekernel_la-clientversion.l$(OBJEXT): obj/build.h
 endif # BUILD_BITCOIN_KERNEL_LIB
 #
 
-# peercoinconsensus library #
+# litedogeconsensus library #
 if BUILD_BITCOIN_LIBS
 lib_LTLIBRARIES += $(LIBBITCOINCONSENSUS)
 
 include_HEADERS = script/bitcoinconsensus.h
-libpeercoinconsensus_la_SOURCES = support/cleanse.cpp $(crypto_libbitcoin_crypto_base_la_SOURCES) $(libbitcoin_consensus_a_SOURCES)
+liblitedogeconsensus_la_SOURCES = support/cleanse.cpp $(crypto_libbitcoin_crypto_base_la_SOURCES) $(libbitcoin_consensus_a_SOURCES)
 
-libpeercoinconsensus_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(RELDFLAGS)
-libpeercoinconsensus_la_LIBADD = $(LIBSECP256K1)
-libpeercoinconsensus_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_BITCOIN_INTERNAL
-libpeercoinconsensus_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+liblitedogeconsensus_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(RELDFLAGS)
+liblitedogeconsensus_la_LIBADD = $(LIBSECP256K1)
+liblitedogeconsensus_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_BITCOIN_INTERNAL
+liblitedogeconsensus_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 
 endif
 #

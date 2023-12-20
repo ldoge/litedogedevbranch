@@ -46,7 +46,7 @@ const QString BITCOIN_IPC_PREFIX("peercoin:");
 //
 static QString ipcServerName()
 {
-    QString name("PeercoinQt");
+    QString name("LitedogeQt");
 
     // Append a simple hash of the datadir
     // Note that gArgs.GetDataDirNet() returns a different path
@@ -229,7 +229,7 @@ void PaymentServer::handleURIOrFile(const QString& s)
             }
             else
                 Q_EMIT message(tr("URI handling"),
-                    tr("URI cannot be parsed! This can be caused by an invalid Peercoin address or malformed URI parameters."),
+                    tr("URI cannot be parsed! This can be caused by an invalid Litedoge address or malformed URI parameters."),
                     CClientUIInterface::ICON_WARNING);
 
             return;

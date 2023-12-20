@@ -31,8 +31,8 @@ SplashScreen::SplashScreen(const NetworkStyle* networkStyle)
     : QWidget()
 {
     // set reference point, paddings
-    int paddingRight            = 165;
-    int paddingTop              = 55;
+    int paddingRight            = 392; 
+    int paddingTop              = 8;
     int titleVersionVSpace      = 17;
     int titleCopyrightVSpace    = 40;
 
@@ -66,7 +66,7 @@ SplashScreen::SplashScreen(const NetworkStyle* networkStyle)
     pixPaint.fillRect(rGradient, gradient);
 
     // draw the bitcoin icon, expected size of PNG: 1024x1024
-    const QSize requiredSize(100,100);
+    const QSize requiredSize(400,400);
     QPixmap icon(networkStyle->getAppIcon().pixmap(requiredSize));
 
     QRect rectIcon(QPoint(40,30), requiredSize);
@@ -74,20 +74,18 @@ SplashScreen::SplashScreen(const NetworkStyle* networkStyle)
 
     QRect rectAvatar(QPoint(15,125), QSize(853/2,598/2));
 
-    pixPaint.drawPixmap(rectAvatar, QPixmap(":/images/ladybug"));
-
     // check font size and drawing with
-    pixPaint.setFont(QFont(font, 33*fontFactor));
+    pixPaint.setFont(QFont(font, 15*fontFactor));
     QFontMetrics fm = pixPaint.fontMetrics();
     int titleTextWidth = GUIUtil::TextWidth(fm, titleText);
     if (titleTextWidth > 176) {
         fontFactor = fontFactor * 176 / titleTextWidth;
     }
 
-    pixPaint.setFont(QFont(font, 33*fontFactor));
+    pixPaint.setFont(QFont(font, 15*fontFactor));
     fm = pixPaint.fontMetrics();
     titleTextWidth  = GUIUtil::TextWidth(fm, titleText);
-    pixPaint.drawText(pixmap.width()/devicePixelRatio-titleTextWidth-paddingRight,paddingTop,titleText);
+    //pixPaint.drawText(pixmap.width()/devicePixelRatio-titleTextWidth-paddingRight,paddingTop,titleText);
 
     pixPaint.setFont(QFont(font, 15*fontFactor));
 
@@ -98,7 +96,7 @@ SplashScreen::SplashScreen(const NetworkStyle* networkStyle)
         pixPaint.setFont(QFont(font, 10*fontFactor));
         titleVersionVSpace -= 5;
     }
-    pixPaint.drawText(pixmap.width()/devicePixelRatio-titleTextWidth-paddingRight+2,paddingTop+titleVersionVSpace,versionText);
+    //pixPaint.drawText(pixmap.width()/devicePixelRatio-titleTextWidth-paddingRight+2,paddingTop+titleVersionVSpace,versionText);
 
     // draw copyright stuff
     {
@@ -106,7 +104,7 @@ SplashScreen::SplashScreen(const NetworkStyle* networkStyle)
         const int x = pixmap.width()/devicePixelRatio-titleTextWidth-paddingRight;
         const int y = paddingTop+titleCopyrightVSpace;
         QRect copyrightRect(x, y, pixmap.width() - x - paddingRight, pixmap.height() - y);
-        pixPaint.drawText(copyrightRect, Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap, copyrightText);
+        //pixPaint.drawText(copyrightRect, Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap, copyrightText);
     }
 
     // draw additional text if special network
