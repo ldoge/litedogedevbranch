@@ -24,7 +24,7 @@ LDOGE Information
 
 Enable Proof of work again, Make rewards up to 18 coins per P.O.W. Block, Electrum Wallet, make buildable on all systems
 
-### Litedoge Resources
+## Litedoge Resources
 
 # Official Website
 (https://litedogeofficial.org)
