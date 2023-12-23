@@ -38,11 +38,12 @@ Enable Proof of work again, Make rewards up to 18 coins per P.O.W. Block, Electr
 [Source Code](https://github.com/vashshawn/ldoge)
 
 # Help
+
 [Telegram Chat]https://t.me/LDOGE
 
 [Discord] https://discord.gg/VvA3d3bcBr
 
-[BitcoinTalk Forum], https://bitcointalk.org/index.php?topic=1308769.0
+[BitcoinTalk Forum] https://bitcointalk.org/index.php?topic=1308769.0
 
 [Twitter page] https://twitter.com/litedoge2018
 
