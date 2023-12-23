@@ -26,13 +26,13 @@ Enable Proof of work again, Make rewards up to 18 coins per P.O.W. Block, Electr
 
 ### Litedoge Resources
 
-# Official Website: 
+# Official Website
 (https://litedogeofficial.org)
 
 # Documentation/Install Guides: [LDOGE WIKI]
 (https://github.com/ldoge/LDOGE/wiki)
 
-# Client and Source:
+# Client and Source
 [Client Binaries](https://github.com/vashshawn/ldoge/releases)
 
 [Source Code](https://github.com/vashshawn/ldoge)
