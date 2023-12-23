@@ -31,8 +31,8 @@ Enable Proof of work again, Make rewards up to 18 coins per P.O.W. Block, Electr
 # Documentation/ Install Guides: [LDOGE WIKI] (https://github.com/ldoge/LDOGE/wiki)
 
 # Client and Source:
-[Source Code] ([https://github.com/peercoin/peercoin])
-[Binary Release]([https://github.com/ldoge/LDOGE/releases])
+[Client Binaries](https://github.com/vashshawn/ldoge/releases),
+[Source Code](https://github.com/vashshawn/ldoge)
 
 # Help
 [Telegram Chat] (https://t.me/LDOGE)
