@@ -1,61 +1,73 @@
-# Peercoin Official Development Repo
+# LITEDOGE- LDOGE | CORE Wallet Version 3.6.0.1 
+![8b55011e9d71b1e9da2ebfb528d43268](https://github.com/ldoge/LDOGE/blob/master/src/qt/res/icons/litedogecoin-128.png) 
+### What is Litedoge?
+[LITEDOGE- LDOG](https://litedogeofficial.org) (abbreviated LDOGE), (prounced as Light Doghe) LiteDoge is a free open source project derived from Bitcoin, with
+the goal of providing a long-term energy-efficient scrypt-based crypto-currency.
+Built on the foundation of BTC, PPC, NVC, and BLK. Innovations such as proof-of-stake help further advance the field of crypto-currency. But Proof of work will always be the best secure way the blockchain. Checkpoints and centralized nodes are points of failure with proof of stake.
 
-[![Peercoin Donate](https://badgen.net/badge/peercoin/Donate/green?icon=https://raw.githubusercontent.com/peercoin/media/84710cca6c3c8d2d79676e5260cc8d1cd729a427/Peercoin%202020%20Logo%20Files/01.%20Icon%20Only/Inside%20Circle/Transparent/Green%20Icon/peercoin-icon-green-transparent.svg)](https://chainz.cryptoid.info/ppc/address.dws?p92W3t7YkKfQEPDb7cG9jQ6iMh7cpKLvwK)
-[![Continuous Integration](https://github.com/peercoin/peercoin/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/peercoin/peercoin/actions/workflows/build.yml)
+LDOGE Information
+====================
+ Ticker: LDOGE          | PoW/PoS         | Algorithm:SCRYPT    |     Nodes         |     Ports
+:----------------------:|:---------------:|:----------------:|:-----------------:|:-------------:
+ Genesis Block:         | 3/15/2015       | 08:15:00 PM UTC  |  108.95.86.140    |     MAINNET 
+ Max POS REWARDS:       | 500.1 COINS     | -                |  122.173.26.30    |     PORT 17014
+ Last PoW Block:8000    | 3/19/2015       |  9:08:33 PM UTC  |  46.223.163.18    |     RCP  17015
+ First PoS Block:8001   | 3/19/2015       | 9:10:56  PM UTC  |  174.84.66.125    |-    
+ PoS Annual Interest:   | 1%              | -                |  189.161.146.213  |     TESTNET
+ PoS type:              | 2.0             | -                |  88.78.111.11     |     PORT
+ PoS Minimum Stake Age: | 8 Hours         |                  |  176.137.227.2    |     RCP
+ TOTAL SUPPLY           | NO CAP          | -                |  24.18.45.238     |-
+ Maturity:              |501 blocks       | -                |  89.41.26.58      | - 
 
-### What is Peercoin?
-[Peercoin](https://peercoin.net) (abbreviated PPC), previously known as PPCoin, is the first [cryptocurrency](https://en.wikipedia.org/wiki/Cryptocurrency) design introducing [proof-of-stake consensus](https://peercoin.net/resources#whitepaper) as a security model, with a combined [proof-of-stake](https://peercoin.net/resources#whitepaper)/[proof-of-work](https://en.wikipedia.org/wiki/Proof-of-work_system) minting system. Peercoin is based on [Bitcoin](https://bitcoin.org), while introducing many important innovations to cryptocurrency field including new security model, energy efficiency, better minting model and more adaptive response to rapid change in network computation power.
-### Peercoin Resources
-* Client and Source:
-[Client Binaries](https://github.com/peercoin/peercoin/releases),
-[Source Code](https://github.com/peercoin/peercoin)
-* Documentation: [Peercoin Docs](https://docs.peercoin.net)
-* Help: 
-[Forum](https://talk.peercoin.net),
-[Intro & Important Links](https://talk.peercoin.net/t/what-is-peercoin-intro-important-links/2889),
-[Telegram Chat](https://t.me/peercoin)
+        
+# Punch list of development in the works 
 
-Testing
--------
+Enable Proof of work again, Make rewards up to 18 coins per P.O.W. Block, Electrum Wallet, make buildable on all systems
 
-Testing and code review is the bottleneck for development; we get more pull
-requests than we can review and test. Please be patient and help out, and
-remember this is a security-critical project where any mistake might cost people
-lots of money.
+### Litedoge Resources
 
-### Automated Testing
+# Official Website: https://litedogeofficial.org
 
-Developers are strongly encouraged to write unit tests for new code, and to submit new unit tests for old code.
+# Documentation/ Install Guides: [LDOGE WIKI] (https://github.com/ldoge/LDOGE/wiki)
 
-Unit tests can be compiled and run (assuming they weren't disabled in configure) with:
-  make check
+# Client and Source:
+[Source Code] ([https://github.com/peercoin/peercoin])
+[Binary Release]([https://github.com/ldoge/LDOGE/releases])
 
-### Manual Quality Assurance (QA) Testing
+# Help
+[Telegram Chat] (https://t.me/LDOGE)
+[Discord] (https://discord.gg/VvA3d3bcBr)
+[BitcoinTalk Forum] https://bitcointalk.org/index.php?topic=1308769.0
+[Twitter page] https://twitter.com/litedoge2018
 
-Large changes should have a test plan, and should be tested by somebody other than the developer who wrote the code.
-
-* Developers work in their own forks, then submit pull requests when they think their feature or bug fix is ready.
-* If it is a simple/trivial/non-controversial change, then one of the development team members simply pulls it.
-* If it is a more complicated or potentially controversial change, then the change may be discussed in the pull request, or the requester may be asked to start a discussion in the [Peercoin Forum](https://talk.peercoin.net) for a broader community discussion. 
-* The patch will be accepted if there is broad consensus that it is a good thing. Developers should expect to rework and resubmit patches if they don't match the project's coding conventions (see coding.txt) or are controversial.
-* From time to time a pull request will become outdated. If this occurs, and the pull is no longer automatically mergeable; a comment on the pull will be used to issue a warning of closure.  Pull requests closed in this manner will have their corresponding issue labeled 'stagnant'.
-* For development ideas and help see [here](https://talk.peercoin.net/c/protocol).
-
-## Branches:
-
-### develop (all pull requests should go here)
-The develop branch is used by developers to merge their newly implemented features to.
-Pull requests should always be made to this branch (except for critical fixes), and could possibly break the code.
-The develop branch is therefore unstable and not guaranteed to work on any system.
-
-### master (only updated by group members)
-The master branch get's updates from tested states of the develop branch.
-Therefore, the master branch should contain functional but experimental code.
-
-### release-* (the official releases)
-The release branch is identified by it's major and minor version number e.g. `release-0.6`.
-The official release tags are always made on a release branch.
-Release branches will typically branch from or merge tested code from the master branch to freeze the code for release.
-Only critical patches can be applied through pull requests directly on this branch, all non critical features should follow the standard path through develop -> master -> release-*
+# Block Explorers
+https://chainz.cryptoid.info/ldoge/
+Same IP http://blocks.litedogeofficial.org
 
 
+# Faucets 
+https://btcpop.co/faucet/LDOGE
+https://bill48105.github.io/wallet/ -wallet/tip bot/faucet/2fa
+
+# License
+# Litedoge (LDOGE) Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
+# http://opensource.org/licenses/MIT.
+
+# Development Process 
+
+Developers work in their own trees, then submit pull requests when they think their feature or bug fix is ready.
+
+The patch will be accepted if there is broad consensus that it is a good thing. Developers should expect to rework and resubmit patches if they don't match the project's coding conventions (see coding.txt) or are controversial.
+
+The master branch is regularly built and tested, but is not guaranteed to be completely stable. Tags are regularly created to indicate new stable release versions of LiteDoge.
+
+Feature branches are created when there are major new features being worked on by several people.
+
+From time to time a pull request will become outdated. If this occurs, and the pull is no longer automatically mergeable; a comment on the pull will be used to issue a warning of closure. 
+
+Issues with no commits will be given a similar warning, and closed after 15 days from their last activity. Issues closed in this manner will be labeled 'stale'.
+
+
+[![Continuous Integration]([https://github.com/peercoin/peercoin](https://github.com/barrystyle/litedoge/actions/workflows/build.yml/badge.svg?branch=master)]([[https://github.com/peercoin/ldoge](https://github.com/barrystyle/litedoge/)](https://github.com/barrystyle/litedoge/workflows/build.yml)
+
+When Building Litedoge use qmake for QT GUI and use make for building Non GUI deamon 
