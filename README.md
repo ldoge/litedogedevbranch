@@ -24,7 +24,7 @@ LDOGE Information
 
 Enable Proof of work again, Make rewards up to 18 coins per P.O.W. Block, Electrum Wallet, make buildable on all systems
 
-## Litedoge Resources
+### Litedoge Resources
 
 # Official Website
 (https://litedogeofficial.org)
@@ -39,13 +39,13 @@ Enable Proof of work again, Make rewards up to 18 coins per P.O.W. Block, Electr
 
 # Help
 
-[Telegram Chat]https://t.me/LDOGE
+[Telegram Chat](https://t.me/LDOGE)
 
-[Discord] https://discord.gg/VvA3d3bcBr
+[Discord](https://discord.gg/VvA3d3bcBr)
 
-[BitcoinTalk Forum] https://bitcointalk.org/index.php?topic=1308769.0
+[BitcoinTalk Forum](https://bitcointalk.org/index.php?topic=1308769.0)
 
-[Twitter page] https://twitter.com/litedoge2018
+[Twitter page](https://twitter.com/litedoge2018)
 
 # Block Explorers
 https://chainz.cryptoid.info/ldoge/
