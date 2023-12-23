@@ -38,8 +38,8 @@ Enable Proof of work again, Make rewards up to 18 coins per P.O.W. Block, Electr
 [Source Code](https://github.com/vashshawn/ldoge)
 
 # Help
-[Telegram Chat] (https://t.me/LDOGE),
-[Discord] (https://discord.gg/VvA3d3bcBr),
+[Telegram Chat]https://t.me/LDOGE
+[Discord] https://discord.gg/VvA3d3bcBr
 [BitcoinTalk Forum], https://bitcointalk.org/index.php?topic=1308769.0
 [Twitter page] https://twitter.com/litedoge2018
 
@@ -49,8 +49,9 @@ Same IP http://blocks.litedogeofficial.org
 
 
 # Faucets 
-(https://btcpop.co/faucet/LDOGE),
-(https://bill48105.github.io/wallet/) -wallet/tip bot/faucet/2fa
+https://btcpop.co/faucet/LDOGE
+
+https://bill48105.github.io/wallet/ -wallet/tip bot/faucet/2fa/autostaking
 
 # License
 Litedoge (LDOGE) Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
