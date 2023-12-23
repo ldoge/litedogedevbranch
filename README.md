@@ -68,6 +68,6 @@ From time to time a pull request will become outdated. If this occurs, and the p
 Issues with no commits will be given a similar warning, and closed after 15 days from their last activity. Issues closed in this manner will be labeled 'stale'.
 
 
-[![Continuous Integration]([https://github.com/peercoin/peercoin](https://github.com/barrystyle/litedoge/actions/workflows/build.yml/badge.svg?branch=master)]([[https://github.com/peercoin/ldoge](https://github.com/barrystyle/litedoge/)](https://github.com/barrystyle/litedoge/workflows/build.yml)
+[![Continuous Integration](https://github.com/barrystyle/litedoge/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/barrystyle/litedoge/workflows/build.yml)
 
 When Building Litedoge use qmake for QT GUI and use make for building Non GUI deamon 
