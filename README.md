@@ -38,9 +38,9 @@ Enable Proof of work again, Make rewards up to 18 coins per P.O.W. Block, Electr
 [Source Code](https://github.com/vashshawn/ldoge)
 
 # Help
-[Telegram Chat] (https://t.me/LDOGE)
-[Discord] (https://discord.gg/VvA3d3bcBr)
-[BitcoinTalk Forum] https://bitcointalk.org/index.php?topic=1308769.0
+[Telegram Chat] (https://t.me/LDOGE),
+[Discord] (https://discord.gg/VvA3d3bcBr),
+[BitcoinTalk Forum], https://bitcointalk.org/index.php?topic=1308769.0
 [Twitter page] https://twitter.com/litedoge2018
 
 # Block Explorers
@@ -49,7 +49,7 @@ Same IP http://blocks.litedogeofficial.org
 
 
 # Faucets 
-(https://btcpop.co/faucet/LDOGE)
+(https://btcpop.co/faucet/LDOGE),
 (https://bill48105.github.io/wallet/) -wallet/tip bot/faucet/2fa
 
 # License
