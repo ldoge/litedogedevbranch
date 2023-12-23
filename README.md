@@ -1,7 +1,7 @@
 # LITEDOGE- LDOGE | CORE Wallet Version 3.6.0.1 
 ![8b55011e9d71b1e9da2ebfb528d43268](https://github.com/ldoge/LDOGE/blob/master/src/qt/res/icons/litedogecoin-128.png) 
 ### What is Litedoge?
-[LITEDOGE- LDOG](https://litedogeofficial.org) (abbreviated LDOGE), (prounced as Light Doghe) LiteDoge is a free open source project derived from Bitcoin, with
+[LITEDOGE- LDOGE](https://litedogeofficial.org) (abbreviated LDOGE), (prounced as Light Doghe) LiteDoge is a free open source project derived from Bitcoin, with
 the goal of providing a long-term energy-efficient scrypt-based crypto-currency.
 Built on the foundation of BTC, PPC, NVC, and BLK. Innovations such as proof-of-stake help further advance the field of crypto-currency. But Proof of work will always be the best secure way the blockchain. Checkpoints and centralized nodes are points of failure with proof of stake.
 
