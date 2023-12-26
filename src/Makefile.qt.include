@@ -386,14 +386,14 @@ litedoge_qt_libtoolflags = $(AM_LIBTOOLFLAGS) --tag CXX
 qt_litedoge_qt_CPPFLAGS = $(litedoge_qt_cppflags)
 qt_litedoge_qt_CXXFLAGS = $(litedoge_qt_cxxflags)
 qt_litedoge_qt_SOURCES = $(litedoge_qt_sources) init/bitcoin-qt.cpp
-qt_litedoge_qt_LDADD = $(litedoge_qt_ldadd)
+qt_litedoge_qt_LDADD = $(litedoge_qt_ldadd) $(CRYPTO_LIBS)
 qt_litedoge_qt_LDFLAGS = $(litedoge_qt_ldflags)
 qt_litedoge_qt_LIBTOOLFLAGS = $(litedoge_qt_libtoolflags)
 
 litedoge_gui_CPPFLAGS = $(litedoge_qt_cppflags)
 litedoge_gui_CXXFLAGS = $(litedoge_qt_cxxflags)
 litedoge_gui_SOURCES = $(litedoge_qt_sources) init/bitcoin-gui.cpp
-litedoge_gui_LDADD = $(litedoge_qt_ldadd) $(LIBBITCOIN_IPC) $(LIBBITCOIN_UTIL) $(LIBMULTIPROCESS_LIBS)
+litedoge_gui_LDADD = $(litedoge_qt_ldadd) $(CRYPTO_LIBS) $(LIBBITCOIN_IPC) $(LIBBITCOIN_UTIL) $(LIBMULTIPROCESS_LIBS)
 litedoge_gui_LDFLAGS = $(litedoge_qt_ldflags)
 litedoge_gui_LIBTOOLFLAGS = $(litedoge_qt_libtoolflags)
 
