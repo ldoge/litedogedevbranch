@@ -860,6 +860,7 @@ litedoge_util_LDADD = \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_CONSENSUS) \
   $(LIBBITCOIN_CRYPTO) \
+  $(CRYPTO_LIBS) \
   $(LIBSECP256K1)
 #
 
