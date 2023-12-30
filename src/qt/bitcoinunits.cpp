@@ -1,4 +1,5 @@
-// Copyright (c) 2011-2021 The Bitcoin Core developers
+// Copyright (c) 2024 The Bitcoin Core developers
+// Copyright (c) 2024 The Litedoge Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -34,7 +35,7 @@ QString BitcoinUnits::longName(Unit unit)
     case Unit::BTC: return QString("LDOGE");
     case Unit::mBTC: return QString("mLDOGE");
     case Unit::uBTC: return QString::fromUtf8("μLDOGE");
-    case Unit::SAT: return QString("Satoshi (sat)");
+    case Unit::SAT: return QString("Ltoshi)");
     } // no default case, so the compiler can warn about missing cases
     assert(false);
 }
@@ -56,7 +57,7 @@ QString BitcoinUnits::description(Unit unit)
     case Unit::BTC: return QString("LiteDoges");
     case Unit::mBTC: return QString("Milli-LiteDoges (1 / 1" THIN_SP_UTF8 "000)");
     case Unit::uBTC: return QString("Micro-LiteDoges (bits) (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
-    case Unit::SAT: return QString("Satoshi (sat) (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+    case Unit::SAT: return QString("Ltoshi  (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
     } // no default case, so the compiler can warn about missing cases
     assert(false);
 }
@@ -66,7 +67,7 @@ qint64 BitcoinUnits::factor(Unit unit)
     switch (unit) {
     case Unit::BTC: return 1'000'000;
     case Unit::mBTC: return 1'000;
-    case Unit::uBTC: return 1;
+    case Unit::uBTC: return 100;
     case Unit::SAT: return 1;
     } // no default case, so the compiler can warn about missing cases
     assert(false);
@@ -75,9 +76,9 @@ qint64 BitcoinUnits::factor(Unit unit)
 int BitcoinUnits::decimals(Unit unit)
 {
     switch (unit) {
-    case Unit::BTC: return 6;
-    case Unit::mBTC: return 3;
-    case Unit::uBTC: return 0;
+    case Unit::BTC: return 8;
+    case Unit::mBTC: return 5;
+    case Unit::uBTC: return 2;
     case Unit::SAT: return 0;
     } // no default case, so the compiler can warn about missing cases
     assert(false);
