@@ -17,13 +17,18 @@ static constexpr CAmount COIN = 100000000;
 static constexpr CAmount CENT = 1000000;
 
 static const CAmount MIN_TX_FEE_PREV7 = CENT;
-static const CAmount MIN_TX_FEE = CENT / 10;
-static const CAmount PERKB_TX_FEE = CENT;
-static const CAmount MIN_TXOUT_AMOUNT = CENT;
-static const CAmount MAX_MINT_PROOF_OF_WORK = 9999 * COIN;
+static const CAmount MIN_TX_FEE = CENT / 10000;
+/** Fees smaller than this (in satoshi) are considered zero fee (for relaying) */
+static const int64_t MIN_RELAY_TX_FEE = MIN_TX_FEE;
+/** Fees smaller than this (in satoshi) are considered zero fee (for transaction creation) after block 594999 */
+static const int64_t MIN_TX_FEEv2 = 10000000; //0.1 coins
+/** Fees smaller than this (in satoshi) are considered zero fee (for relaying) after block 594999 */
+static const CAmount PERKB_TX_FEE = MIN_TX_FEEv2;
+static const CAmount MIN_TXOUT_AMOUNT = MIN_TX_FEEv2;
+static const CAmount MAX_MINT_PROOF_OF_WORK = 50 * COIN;
 static const CAmount MAX_MINT_PROOF_OF_WORK_V10 = 50 * COIN;
 static const std::string CURRENCY_UNIT = "LDOGE";
-static const std::string CURRENCY_ATOM = "sat"; // One indivisible minimum value unit
+static const std::string CURRENCY_ATOM = "Ltoshi"; // One indivisible minimum value unit
 
 /** No amount larger than this (in satoshi) is valid.
  *
@@ -36,5 +41,7 @@ static const std::string CURRENCY_ATOM = "sat"; // One indivisible minimum value
  * */
 static constexpr CAmount MAX_MONEY = std::numeric_limits<int64_t>::max();
 inline bool MoneyRange(const CAmount& nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
+/** Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp. */
+static const unsigned int LOCKTIME_THRESHOLD = 500000000; // Tue Nov  5 00:53:20 1985 UTC
 
 #endif // BITCOIN_CONSENSUS_AMOUNT_H
